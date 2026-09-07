@@ -15,13 +15,14 @@ is
    --  Maximum capacity for line point buffers.
    Max_Points : constant := 2_000_001;
 
-   type Point_List (Capacity : Natural := Max_Points) is record
+   subtype Point_Capacity is Natural range 0 .. Max_Points;
+
+   type Point_List (Capacity : Point_Capacity) is record
       Length : Natural := 0;
       Points : Point_Array (1 .. Capacity);
    end record;
 
    --  Callback procedure signature for immediate-mode drawing.
-   --  Using an anonymous access-to-subprogram or access-to-subprogram with Unrestricted_Access.
    type Plot_Procedure is access procedure (P : Point);
 
    --  Validation helper functions.

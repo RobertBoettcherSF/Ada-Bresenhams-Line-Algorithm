@@ -21,7 +21,8 @@ is
    end record;
 
    --  Callback procedure signature for immediate-mode drawing.
-   type Plot_Procedure is not null access procedure (P : Point);
+   --  Using an anonymous access-to-subprogram or access-to-subprogram with Unrestricted_Access.
+   type Plot_Procedure is access procedure (P : Point);
 
    --  Validation helper functions.
    function Manhattan_Distance (P1, P2 : Point) return Natural is
@@ -48,7 +49,7 @@ is
       Result : out Point_List)
    with
       Pre => Is_Valid_Octant_0_Line (P1, P2)
-             and then Expected_Line_Length (P1, P2) <= Point_List'Class (Result)'Length,
+             and then Expected_Line_Length (P1, P2) <= Result.Capacity,
       Post => Result.Length = Expected_Line_Length (P1, P2)
               and then (Result.Length > 0 and then Result.Points (1) = P1)
               and then Result.Points (Result.Length) = P2;
@@ -60,7 +61,7 @@ is
       P2     : Point;
       Result : out Point_List)
    with
-      Pre => Expected_Line_Length (P1, P2) <= Point_List'Class (Result)'Length,
+      Pre => Expected_Line_Length (P1, P2) <= Result.Capacity,
       Post => Result.Length = Expected_Line_Length (P1, P2)
               and then (Result.Length > 0 and then Result.Points (1) = P1)
               and then Result.Points (Result.Length) = P2;
@@ -82,7 +83,7 @@ is
       Thickness : Thickness_Type;
       Result    : out Point_List)
    with
-      Pre => (Expected_Line_Length (P1, P2) * Natural (Thickness)) <= Point_List'Class (Result)'Length,
+      Pre => (Expected_Line_Length (P1, P2) * Natural (Thickness)) <= Result.Capacity,
       Post => Result.Length = Expected_Line_Length (P1, P2) * Natural (Thickness);
 
 end Bresenham;

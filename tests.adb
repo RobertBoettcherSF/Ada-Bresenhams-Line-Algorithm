@@ -132,14 +132,14 @@ begin
    ----------------------------------------------------------------------
    Put_Line ("TEST 9 — Immediate Callback Execution");
    Callback_Count := 0;
-   Line_General_Callback (Point'(0, 0), Point'(4, 10), Test_Collector'Access);
+   Line_General_Callback (Point'(0, 0), Point'(4, 10), Test_Collector'Unrestricted_Access);
    Check ("9.1 Callback executed 11 times", Callback_Count = 11);
    Check ("9.2 Final coordinate observed is endpoint", Last_Seen_Pt = Point'(4, 10));
    Check ("9.3 Length matches Chebyshev distance + 1",
           Callback_Count = Expected_Line_Length (Point'(0, 0), Point'(4, 10)));
 
    ----------------------------------------------------------------------
-   -- TEST 10 — Distance & Octant Validation Helpers
+   -- TEST 10 — Helper Logic Validation
    ----------------------------------------------------------------------
    Put_Line ("TEST 10 — Helper Logic Validation");
    Check ("10.1 Manhattan distance calculation",

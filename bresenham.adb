@@ -142,7 +142,6 @@ is
       Line_General (P1, P2, Base_Line);
       Result.Length := 0;
 
-      --  For each cross-section layer offset, duplicate the base line shifted perpendicularly
       for Step_Idx in 0 .. T_Count - 1 loop
          declare
             Shift : constant Coordinate := Coordinate (Offset_Start + Step_Idx);
@@ -159,7 +158,7 @@ is
                            Y => Base_Line.Points (Pt_Idx).Y);
                end if;
             end loop;
-         end declare;
+         end;
       end loop;
    end Line_Thick;
 
